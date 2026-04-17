@@ -2,31 +2,31 @@ name: Build and Deploy to Render
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml -DskipTests
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -DskipTests
 
-    - name: Trigger Render Deploy
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: |
-        if [ -n "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
-          curl -f ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-        else
-          echo "RENDER_DEPLOY_HOOK_URL not set, skipping manual trigger. Render auto-deploy might still handle this if configured."
-        fi
+      - name: Trigger Render Deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if [ -n "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+            curl -f ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          else
+            echo "RENDER_DEPLOY_HOOK_URL not set, skipping manual trigger. Render auto-deploy might still handle this if configured."
+          fi
