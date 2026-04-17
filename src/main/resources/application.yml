@@ -1,5 +1,8 @@
+server:
+  port: ${PORT:8080}
 spring:
   application:
+
     name: saas-core
   threads:
     virtual:
