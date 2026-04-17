@@ -6,7 +6,6 @@
     <title>SaaS Multi-Tenant API Hub</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
         :root {
             --bg: #fafafa;
             --surface: #ffffff;
@@ -21,13 +20,11 @@
             --font-family: 'Inter', -apple-system, sans-serif;
             --code-bg: #f1f5f9;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             font-family: var(--font-family);
             background-color: var(--bg);
@@ -36,33 +33,27 @@
             -webkit-font-smoothing: antialiased;
             padding-bottom: 4rem;
         }
-
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
-
         header {
             padding: 4rem 0 2rem;
             text-align: center;
         }
-
         h1 {
             font-size: 2.25rem;
             font-weight: 700;
             letter-spacing: -0.025em;
             margin-bottom: 0.75rem;
         }
-
         .subtitle {
             color: var(--text-muted);
             font-size: 1.125rem;
             max-width: 600px;
             margin: 0 auto;
         }
-
-        /* Steps Layout */
         .step {
             background-color: var(--surface);
             border: 1px solid var(--border);
@@ -72,12 +63,10 @@
             box-shadow: var(--shadow);
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-
         .step:hover {
             border-color: #cbd5e1;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
         }
-
         .step-header {
             display: flex;
             align-items: center;
@@ -86,7 +75,6 @@
             border-bottom: 1px solid var(--border);
             padding-bottom: 1rem;
         }
-
         .step-number {
             display: flex;
             align-items: center;
@@ -99,18 +87,15 @@
             font-weight: 600;
             font-size: 0.875rem;
         }
-
         .step-title h2 {
             font-size: 1.25rem;
             font-weight: 600;
         }
-
         .step-title p {
             font-size: 0.875rem;
             color: var(--text-muted);
             margin-top: 0.25rem;
         }
-
         .badge {
             font-size: 0.7rem;
             font-weight: 700;
@@ -120,11 +105,8 @@
             margin-right: 0.5rem;
             border: 1px solid var(--border);
         }
-
         .badge.post { background: var(--code-bg); color: #000; }
         .badge.get { background: var(--code-bg); color: #000; }
-
-        /* Configuration Top Bar */
         .context-bar {
             background-color: var(--text-main);
             color: var(--surface);
@@ -137,12 +119,10 @@
             align-items: center;
             box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
         }
-
         .context-group {
             flex: 1;
             min-width: 250px;
         }
-
         .context-group label {
             display: block;
             font-size: 0.75rem;
@@ -151,35 +131,28 @@
             color: #94a3b8;
             margin-bottom: 0.5rem;
         }
-
         .context-group input {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
         .context-group input:focus {
             border-color: white;
             background: rgba(255, 255, 255, 0.15);
         }
-
-        /* Forms */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
-
         @media(min-width: 600px) {
             .grid-2 { grid-template-columns: 1fr 1fr; }
         }
-
         .form-group {
             margin-bottom: 1rem;
         }
-
         .form-group label {
             display: block;
             font-size: 0.875rem;
@@ -187,7 +160,6 @@
             color: var(--text-main);
             margin-bottom: 0.4rem;
         }
-
         input {
             width: 100%;
             padding: 0.625rem 0.75rem;
@@ -199,17 +171,14 @@
             color: var(--text-main);
             transition: all 0.2s;
         }
-
         input::placeholder {
             color: #94a3b8;
         }
-
         input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
         }
-
         button {
             display: inline-flex;
             align-items: center;
@@ -225,25 +194,20 @@
             transition: all 0.2s;
             font-family: inherit;
         }
-
         button:hover {
             background-color: var(--primary-hover);
         }
-
         button:active {
             transform: scale(0.98);
         }
-
         button.secondary {
             background-color: white;
             color: var(--text-main);
             border-color: var(--border);
         }
-
         button.secondary:hover {
             background-color: var(--code-bg);
         }
-
         .response-container {
             margin-top: 1.5rem;
             border-radius: var(--radius-md);
@@ -251,7 +215,6 @@
             border: 1px solid var(--border);
             overflow: hidden;
         }
-
         .response-header {
             background-color: var(--border);
             padding: 0.4rem 1rem;
@@ -261,7 +224,6 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
         .response-body {
             padding: 1rem;
             font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
@@ -273,7 +235,6 @@
             max-height: 250px;
             overflow-y: auto;
         }
-
         .info-panel {
             background-color: #f0fdf4;
             border: 1px solid #bbf7d0;
@@ -283,22 +244,17 @@
             color: #166534;
             font-size: 0.875rem;
         }
-
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
             <h1>API Test Interface</h1>
             <p class="subtitle">A simplified dashboard to test out the Multi-Tenant workflow. Data is stored in-memory and resets on server restart.</p>
         </header>
-
         <div class="info-panel">
             <strong>✓ Self-Sustaining Environment:</strong> The system automatically seeded a test tenant with ID <code>tenant-1</code>. You can use this ID to interact with the API below.
         </div>
-
-        <!-- Global Header State -->
         <div class="context-bar">
             <div class="context-group">
                 <label>X-Tenant-ID Header</label>
@@ -309,8 +265,6 @@
                 <input type="text" id="globalToken" placeholder="Will automatically populate after Login" readonly>
             </div>
         </div>
-
-        <!-- STEP 1 -->
         <div class="step">
             <div class="step-header">
                 <div class="step-number">1</div>
@@ -319,9 +273,7 @@
                     <p>Create a user account natively within the tenant specified in your headers.</p>
                 </div>
             </div>
-            
             <p style="font-size: 0.875rem; font-family: monospace; margin-bottom: 1rem; color: var(--text-muted);"><span class="badge post">POST</span> /auth/register</p>
-            
             <div class="grid-2">
                 <div class="form-group">
                     <label>Username</label>
@@ -336,16 +288,12 @@
                 <label>System Role</label>
                 <input type="text" id="regRole" placeholder="ADMIN" value="ADMIN">
             </div>
-            
             <button onclick="executeRegister()">Create Account</button>
-            
             <div class="response-container">
                 <div class="response-header">Response</div>
-                <pre class="response-body" id="resRegister">// Awaiting execution...</pre>
+                <pre class="response-body" id="resRegister"></pre>
             </div>
         </div>
-
-        <!-- STEP 2 -->
         <div class="step">
             <div class="step-header">
                 <div class="step-number">2</div>
@@ -354,9 +302,7 @@
                     <p>Exchange your credentials for a JWT. This token grants access to protected routes.</p>
                 </div>
             </div>
-
             <p style="font-size: 0.875rem; font-family: monospace; margin-bottom: 1rem; color: var(--text-muted);"><span class="badge post">POST</span> /auth/login</p>
-
             <div class="grid-2">
                 <div class="form-group">
                     <label>Username</label>
@@ -367,16 +313,12 @@
                     <input type="password" id="loginPass" placeholder="••••••••" value="demo123">
                 </div>
             </div>
-
             <button onclick="executeLogin()">Generate JWT</button>
-
             <div class="response-container">
                 <div class="response-header">Response</div>
-                <pre class="response-body" id="resLogin">// Awaiting execution...</pre>
+                <pre class="response-body" id="resLogin"></pre>
             </div>
         </div>
-
-        <!-- STEP 3 -->
         <div class="step">
             <div class="step-header">
                 <div class="step-number">3</div>
@@ -385,10 +327,8 @@
                     <p>Perform restricted operations. The server verifies your JWT and scopes data to your X-Tenant-ID.</p>
                 </div>
             </div>
-
             <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem;">
                 <p style="font-size: 0.875rem; font-family: monospace; margin-bottom: 1rem; color: var(--text-muted);"><span class="badge post">POST</span> /api/projects</p>
-                
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Project Name</label>
@@ -403,40 +343,29 @@
                     <label>Description</label>
                     <input type="text" id="projDesc" placeholder="Brief description...">
                 </div>
-
                 <div style="display: flex; gap: 1rem;">
                     <button onclick="createProject()">Save Project</button>
                     <button class="secondary" onclick="listProjects()">List All Projects</button>
                 </div>
-
                 <div class="response-container">
                     <div class="response-header">Projects Response</div>
-                    <pre class="response-body" id="resProjects">// Awaiting execution...</pre>
+                    <pre class="response-body" id="resProjects"></pre>
                 </div>
             </div>
         </div>
-
     </div>
-
     <script>
         const getHeaders = (authRequired = false) => {
             const tenantId = document.getElementById('globalTenantId').value.trim();
             const token = document.getElementById('globalToken').value.trim();
-            
-            const headers = {
-                'Content-Type': 'application/json'
-            };
-
+            const headers = { 'Content-Type': 'application/json' };
             if (tenantId) headers['X-Tenant-ID'] = tenantId;
             if (authRequired && token) headers['Authorization'] = `Bearer ${token}`;
-            
             return headers;
         };
-
         const renderOut = (el, data) => {
             document.getElementById(el).textContent = JSON.stringify(data, null, 2);
         };
-
         async function executeRegister() {
             try {
                 const payload = {
@@ -444,18 +373,14 @@
                     password: document.getElementById('regPass').value,
                     role: document.getElementById('regRole').value
                 };
-                
                 renderOut('resRegister', "Loading...");
                 const res = await fetch('/auth/register', {
                     method: 'POST',
                     headers: getHeaders(false),
                     body: JSON.stringify(payload)
                 });
-                
                 const data = await res.json();
                 renderOut('resRegister', data);
-                
-                // Auto-fill token if success
                 if (data.token) {
                     document.getElementById('globalToken').value = data.token;
                 }
@@ -463,25 +388,20 @@
                 renderOut('resRegister', { error: err.message });
             }
         }
-
         async function executeLogin() {
             try {
                 const payload = {
                     username: document.getElementById('loginUser').value,
                     password: document.getElementById('loginPass').value
                 };
-                
                 renderOut('resLogin', "Loading...");
                 const res = await fetch('/auth/login', {
                     method: 'POST',
                     headers: getHeaders(false),
                     body: JSON.stringify(payload)
                 });
-                
                 const data = await res.json();
                 renderOut('resLogin', data);
-                
-                // Auto-fill token if success
                 if (data.token) {
                     document.getElementById('globalToken').value = data.token;
                 }
@@ -489,7 +409,6 @@
                 renderOut('resLogin', { error: err.message });
             }
         }
-
         async function createProject() {
             try {
                 const payload = {
@@ -497,15 +416,12 @@
                     description: document.getElementById('projDesc').value,
                     status: document.getElementById('projStatus').value
                 };
-                
                 renderOut('resProjects', "Loading...");
                 const res = await fetch('/api/projects', {
                     method: 'POST',
                     headers: getHeaders(true),
                     body: JSON.stringify(payload)
                 });
-                
-                // Sometimes exceptions come as text if not standard JSON handler
                 const text = await res.text();
                 try {
                     renderOut('resProjects', JSON.parse(text));
@@ -516,7 +432,6 @@
                 renderOut('resProjects', { error: err.message });
             }
         }
-
         async function listProjects() {
             try {
                 renderOut('resProjects', "Loading...");
@@ -524,7 +439,6 @@
                     method: 'GET',
                     headers: getHeaders(true)
                 });
-                
                 const text = await res.text();
                 try {
                     renderOut('resProjects', JSON.parse(text));
