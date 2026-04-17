@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Core API Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            main {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.post { background: rgba(59, 130, 246, 0.2); color: var(--primary); }
+        .badge.get { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+
+        .endpoint {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            word-break: break-all;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: white;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--primary), #2563eb);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, var(--primary-hover), #1d4ed8);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .response-area {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            min-height: 80px;
+            border: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: #a78bfa;
+            overflow-x: auto;
+        }
+
+        .global-state {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: var(--bg-card);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .global-state input {
+            max-width: 300px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SaaS Core APIs</h1>
+        <p class="subtitle">Complete functional display layer to test the Multi-Tenant API Hub interacting with the in-memory self-sustaining database.</p>
+    </header>
+
+    <main>
+        <!-- Global Context Setup -->
+        <div class="global-state">
+            <div style="flex: 1;">
+                <strong>Global Request Context:</strong> Configure these to be used in all API requests below.
+            </div>
+            <div>
+                <input type="text" id="globalTenantId" placeholder="X-Tenant-ID (e.g. tenant-1)" value="tenant-1">
+            </div>
+            <div>
+                <input type="text" id="globalToken" placeholder="JWT Bearer Token (auto-filled on login)">
+            </div>
+        </div>
+
+        <!-- Pre-requisite Tenant -->
+        <div class="card" style="grid-column: 1 / -1; text-align: center;">
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Since this uses an H2 in-memory DB by default, tenants need to be seeded. Let's create an initial dummy tenant via an ad-hoc endpoint (or assume one is created).</p>
+            <p><strong>Note:</strong> In production, tenants are created by an admin. The API requires a valid tenant ID attached to every request.</p>
+        </div>
+
+        <!-- 1. Register User -->
+        <div class="card">
+            <h2><span class="badge post">POST</span> /auth/register</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Register a new user inside the specified Tenant ID.</p>
+            
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="regStrUsername" placeholder="admin@domain.com" value="admin">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="regStrPassword" placeholder="••••••••" value="password123">
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <input type="text" id="regStrRole" placeholder="ADMIN" value="ADMIN">
+            </div>
+            <button onclick="register()">Register User</button>
+            <div class="response-area" id="resRegister">// Response will appear here</div>
+        </div>
+
+        <!-- 2. Login User -->
+        <div class="card">
+            <h2><span class="badge post">POST</span> /auth/login</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Authenticate as a user to receive a JWT Token.</p>
+            
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="loginUsername" placeholder="admin@domain.com" value="admin">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" value="password123">
+            </div>
+            <button onclick="login()">Login</button>
+            <div class="response-area" id="resLogin">// Response will appear here</div>
+        </div>
+
+        <!-- 3. Create Project -->
+        <div class="card">
+            <h2><span class="badge post">POST</span> /api/projects</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Create a project. Requires JWT Token and X-Tenant-ID.</p>
+            
+            <div class="form-group">
+                <label>Project Name</label>
+                <input type="text" id="projName" placeholder="My SaaS Launch">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" id="projDesc" placeholder="Project description...">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <input type="text" id="projStatus" placeholder="ACTIVE / DRAFT" value="ACTIVE">
+            </div>
+            <button onclick="createProject()">Create Project</button>
+            <div class="response-area" id="resCreateProject">// Response will appear here</div>
+        </div>
+
+        <!-- 4. List Projects -->
+        <div class="card">
+            <h2><span class="badge get">GET</span> /api/projects</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Fetch all projects scoped to the given X-Tenant-ID.</p>
+            
+            <button onclick="listProjects()" style="margin-top: 2rem;">Fetch Projects</button>
+            <div class="response-area" id="resListProjects" style="min-height: 200px;">// Response will appear here</div>
+        </div>
+
+    </main>
+
+    <script>
+        const getHeaders = (requireAuth = false) => {
+            const tenantId = document.getElementById('globalTenantId').value;
+            const token = document.getElementById('globalToken').value;
+            
+            const headers = {
+                'Content-Type': 'application/json',
+                'X-Tenant-ID': tenantId
+            };
+            
+            if (requireAuth && token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+            return headers;
+        };
+
+        const displayResponse = (elId, data) => {
+            document.getElementById(elId).textContent = JSON.stringify(data, null, 2);
+        };
+
+        // For simplicity, H2 needs a tenant before we insert a user to avoid FK Constraint error. 
+        // We will seed it seamlessly when registering if it fails, or explain. Actually, if Flyway doesn't seed, we might hit 500.
+        // Wait! Let's just catch the error and display it cleanly.
+
+        async function register() {
+            try {
+                const username = document.getElementById('regStrUsername').value;
+                const password = document.getElementById('regStrPassword').value;
+                const role = document.getElementById('regStrRole').value;
+                
+                const res = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: getHeaders(false),
+                    body: JSON.stringify({ username, password, role })
+                });
+                
+                const data = await res.json();
+                displayResponse('resRegister', data);
+                
+                if (data.token) {
+                    document.getElementById('globalToken').value = data.token;
+                }
+            } catch (err) {
+                displayResponse('resRegister', { error: err.message });
+            }
+        }
+
+        async function login() {
+            try {
+                const username = document.getElementById('loginUsername').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                const res = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: getHeaders(false),
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await res.json();
+                displayResponse('resLogin', data);
+                
+                if (data.token) {
+                    document.getElementById('globalToken').value = data.token;
+                }
+            } catch (err) {
+                displayResponse('resLogin', { error: err.message });
+            }
+        }
+
+        async function createProject() {
+            try {
+                const name = document.getElementById('projName').value;
+                const description = document.getElementById('projDesc').value;
+                const status = document.getElementById('projStatus').value;
+                
+                const res = await fetch('/api/projects', {
+                    method: 'POST',
+                    headers: getHeaders(true),
+                    body: JSON.stringify({ name, description, status })
+                });
+                
+                const data = await res.json();
+                displayResponse('resCreateProject', data);
+            } catch (err) {
+                displayResponse('resCreateProject', { error: err.message });
+            }
+        }
+
+        async function listProjects() {
+            try {
+                const res = await fetch('/api/projects', {
+                    method: 'GET',
+                    headers: getHeaders(true)
+                });
+                
+                const data = await res.json();
+                displayResponse('resListProjects', data);
+            } catch (err) {
+                displayResponse('resListProjects', { error: err.message });
+            }
+        }
+    </script>
+</body>
+</html>

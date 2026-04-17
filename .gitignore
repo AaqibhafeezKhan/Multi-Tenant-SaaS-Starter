@@ -1,0 +1,13 @@
+target/
+*.class
+.mvn/
+mvnw
+mvnw.cmd
+.idea/
+*.iml
+.vscode/
+*.log
+.DS_Store
+*.swp
+.help
+application-local.yml
