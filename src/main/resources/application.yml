@@ -29,5 +29,6 @@ spring:
 app:
   security:
     jwt:
-      secret: VmVyeVNlY3JldEtleUZvckpXVFNpZ25pbmdUaGF0TXVzdEJlQXRMZWFzdDI1NkJpdHM=
-      expiration-ms: 86400000
+      secret: ${JWT_SECRET:VmVyeVNlY3JldEtleUZvckpXVFNpZ25pbmdUaGF0TXVzdEJlQXRMZWFzdDI1NkJpdHM=}
+      expiration-ms: ${JWT_EXPIRATION:86400000}
+
