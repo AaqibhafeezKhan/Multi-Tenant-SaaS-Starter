@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaaS Core API Hub</title>
+    <title>SaaS Multi-Tenant API Hub</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
         :root {
-            --bg-dark: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --accent: #8b5cf6;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --success: #10b981;
-            --danger: #ef4444;
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #000000;
+            --primary-hover: #333333;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --font-family: 'Inter', -apple-system, sans-serif;
+            --code-bg: #f1f5f9;
         }
 
         * {
@@ -27,371 +29,510 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: var(--font-family);
+            background-color: var(--bg);
             color: var(--text-main);
-            line-height: 1.6;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
-            background-attachment: fixed;
-            min-height: 100vh;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 4rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
         header {
-            padding: 4rem 2rem;
+            padding: 4rem 0 2rem;
             text-align: center;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 2.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.75rem;
         }
 
-        p.subtitle {
+        .subtitle {
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: 1.125rem;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 4rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            main {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
+        /* Steps Layout */
+        .step {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .card h2 {
-            font-size: 1.5rem;
             margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .step:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        }
+
+        .step-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--text-main);
+            color: var(--surface);
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .step-title h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .step-title p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
         }
 
         .badge {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.4rem;
             border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 0.5rem;
+            border: 1px solid var(--border);
         }
 
-        .badge.post { background: rgba(59, 130, 246, 0.2); color: var(--primary); }
-        .badge.get { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .badge.post { background: var(--code-bg); color: #000; }
+        .badge.get { background: var(--code-bg); color: #000; }
 
-        .endpoint {
-            font-family: monospace;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            word-break: break-all;
-            border: 1px solid var(--border-color);
+        /* Configuration Top Bar */
+        .context-bar {
+            background-color: var(--text-main);
+            color: var(--surface);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+        }
+
+        .context-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .context-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        .context-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .context-group input:focus {
+            border-color: white;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Forms */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media(min-width: 600px) {
+            .grid-2 { grid-template-columns: 1fr 1fr; }
         }
 
         .form-group {
             margin-bottom: 1rem;
         }
 
-        label {
+        .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 0.4rem;
         }
 
         input {
             width: 100%;
-            padding: 0.75rem;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: white;
-            font-family: inherit;
-            transition: border-color 0.2s;
+            padding: 0.625rem 0.75rem;
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        input::placeholder {
+            color: #94a3b8;
         }
 
         input:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
         }
 
         button {
-            width: 100%;
-            padding: 0.75rem;
-            background: linear-gradient(135deg, var(--primary), #2563eb);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625rem 1.25rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            background-color: var(--primary);
             color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
+            transition: all 0.2s;
+            font-family: inherit;
         }
 
         button:hover {
-            background: linear-gradient(135deg, var(--primary-hover), #1d4ed8);
+            background-color: var(--primary-hover);
         }
 
         button:active {
             transform: scale(0.98);
         }
 
-        .response-area {
+        button.secondary {
+            background-color: white;
+            color: var(--text-main);
+            border-color: var(--border);
+        }
+
+        button.secondary:hover {
+            background-color: var(--code-bg);
+        }
+
+        .response-container {
             margin-top: 1.5rem;
+            border-radius: var(--radius-md);
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .response-header {
+            background-color: var(--border);
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .response-body {
             padding: 1rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 8px;
-            font-family: monospace;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.8125rem;
+            color: #334155;
             white-space: pre-wrap;
-            min-height: 80px;
-            border: 1px solid var(--border-color);
+            word-break: break-all;
+            margin: 0;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .info-panel {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            color: #166534;
             font-size: 0.875rem;
-            color: #a78bfa;
-            overflow-x: auto;
         }
 
-        .global-state {
-            grid-column: 1 / -1;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            background: var(--bg-card);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        .global-state input {
-            max-width: 300px;
-        }
-        
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>SaaS Core APIs</h1>
-        <p class="subtitle">Complete functional display layer to test the Multi-Tenant API Hub interacting with the in-memory self-sustaining database.</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>API Test Interface</h1>
+            <p class="subtitle">A simplified dashboard to test out the Multi-Tenant workflow. Data is stored in-memory and resets on server restart.</p>
+        </header>
 
-    <main>
-        <!-- Global Context Setup -->
-        <div class="global-state">
-            <div style="flex: 1;">
-                <strong>Global Request Context:</strong> Configure these to be used in all API requests below.
+        <div class="info-panel">
+            <strong>✓ Self-Sustaining Environment:</strong> The system automatically seeded a test tenant with ID <code>tenant-1</code>. You can use this ID to interact with the API below.
+        </div>
+
+        <!-- Global Header State -->
+        <div class="context-bar">
+            <div class="context-group">
+                <label>X-Tenant-ID Header</label>
+                <input type="text" id="globalTenantId" value="tenant-1" placeholder="e.g. tenant-1">
             </div>
-            <div>
-                <input type="text" id="globalTenantId" placeholder="X-Tenant-ID (e.g. tenant-1)" value="tenant-1">
-            </div>
-            <div>
-                <input type="text" id="globalToken" placeholder="JWT Bearer Token (auto-filled on login)">
+            <div class="context-group">
+                <label>Authorization (Bearer Token)</label>
+                <input type="text" id="globalToken" placeholder="Will automatically populate after Login" readonly>
             </div>
         </div>
 
-        <!-- Pre-requisite Tenant -->
-        <div class="card" style="grid-column: 1 / -1; text-align: center;">
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Since this uses an H2 in-memory DB by default, tenants need to be seeded. Let's create an initial dummy tenant via an ad-hoc endpoint (or assume one is created).</p>
-            <p><strong>Note:</strong> In production, tenants are created by an admin. The API requires a valid tenant ID attached to every request.</p>
-        </div>
-
-        <!-- 1. Register User -->
-        <div class="card">
-            <h2><span class="badge post">POST</span> /auth/register</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Register a new user inside the specified Tenant ID.</p>
+        <!-- STEP 1 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">
+                    <h2>Register a User</h2>
+                    <p>Create a user account natively within the tenant specified in your headers.</p>
+                </div>
+            </div>
             
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="regStrUsername" placeholder="admin@domain.com" value="admin">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="regStrPassword" placeholder="••••••••" value="password123">
-            </div>
-            <div class="form-group">
-                <label>Role</label>
-                <input type="text" id="regStrRole" placeholder="ADMIN" value="ADMIN">
-            </div>
-            <button onclick="register()">Register User</button>
-            <div class="response-area" id="resRegister">// Response will appear here</div>
-        </div>
-
-        <!-- 2. Login User -->
-        <div class="card">
-            <h2><span class="badge post">POST</span> /auth/login</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Authenticate as a user to receive a JWT Token.</p>
+            <p style="font-size: 0.875rem; font-family: monospace; margin-bottom: 1rem; color: var(--text-muted);"><span class="badge post">POST</span> /auth/register</p>
             
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="loginUsername" placeholder="admin@domain.com" value="admin">
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="regUser" placeholder="jane@example.com" value="demouser">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPass" placeholder="••••••••" value="demo123">
+                </div>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="loginPassword" placeholder="••••••••" value="password123">
+            <div class="form-group" style="max-width: 50%;">
+                <label>System Role</label>
+                <input type="text" id="regRole" placeholder="ADMIN" value="ADMIN">
             </div>
-            <button onclick="login()">Login</button>
-            <div class="response-area" id="resLogin">// Response will appear here</div>
-        </div>
-
-        <!-- 3. Create Project -->
-        <div class="card">
-            <h2><span class="badge post">POST</span> /api/projects</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Create a project. Requires JWT Token and X-Tenant-ID.</p>
             
-            <div class="form-group">
-                <label>Project Name</label>
-                <input type="text" id="projName" placeholder="My SaaS Launch">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <input type="text" id="projDesc" placeholder="Project description...">
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <input type="text" id="projStatus" placeholder="ACTIVE / DRAFT" value="ACTIVE">
-            </div>
-            <button onclick="createProject()">Create Project</button>
-            <div class="response-area" id="resCreateProject">// Response will appear here</div>
-        </div>
-
-        <!-- 4. List Projects -->
-        <div class="card">
-            <h2><span class="badge get">GET</span> /api/projects</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Fetch all projects scoped to the given X-Tenant-ID.</p>
+            <button onclick="executeRegister()">Create Account</button>
             
-            <button onclick="listProjects()" style="margin-top: 2rem;">Fetch Projects</button>
-            <div class="response-area" id="resListProjects" style="min-height: 200px;">// Response will appear here</div>
+            <div class="response-container">
+                <div class="response-header">Response</div>
+                <pre class="response-body" id="resRegister">// Awaiting execution...</pre>
+            </div>
         </div>
 
-    </main>
+        <!-- STEP 2 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">
+                    <h2>Authenticate</h2>
+                    <p>Exchange your credentials for a JWT. This token grants access to protected routes.</p>
+                </div>
+            </div>
+
+            <p style="font-size: 0.875rem; font-family: monospace; margin-bottom: 1rem; color: var(--text-muted);"><span class="badge post">POST</span> /auth/login</p>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUser" placeholder="jane@example.com" value="demouser">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" value="demo123">
+                </div>
+            </div>
+
+            <button onclick="executeLogin()">Generate JWT</button>
+
+            <div class="response-container">
+                <div class="response-header">Response</div>
+                <pre class="response-body" id="resLogin">// Awaiting execution...</pre>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">
+                    <h2>Manage Projects</h2>
+                    <p>Perform restricted operations. The server verifies your JWT and scopes data to your X-Tenant-ID.</p>
+                </div>
+            </div>
+
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.875rem; font-family: monospace; margin-bottom: 1rem; color: var(--text-muted);"><span class="badge post">POST</span> /api/projects</p>
+                
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Project Name</label>
+                        <input type="text" id="projName" placeholder="Alpha Release" value="Project Alpha">
+                    </div>
+                    <div class="form-group">
+                        <label>Status (ACTIVE, ARCHIVED, DRAFT)</label>
+                        <input type="text" id="projStatus" value="ACTIVE">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="projDesc" placeholder="Brief description...">
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="createProject()">Save Project</button>
+                    <button class="secondary" onclick="listProjects()">List All Projects</button>
+                </div>
+
+                <div class="response-container">
+                    <div class="response-header">Projects Response</div>
+                    <pre class="response-body" id="resProjects">// Awaiting execution...</pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        const getHeaders = (requireAuth = false) => {
-            const tenantId = document.getElementById('globalTenantId').value;
-            const token = document.getElementById('globalToken').value;
+        const getHeaders = (authRequired = false) => {
+            const tenantId = document.getElementById('globalTenantId').value.trim();
+            const token = document.getElementById('globalToken').value.trim();
             
             const headers = {
-                'Content-Type': 'application/json',
-                'X-Tenant-ID': tenantId
+                'Content-Type': 'application/json'
             };
+
+            if (tenantId) headers['X-Tenant-ID'] = tenantId;
+            if (authRequired && token) headers['Authorization'] = `Bearer ${token}`;
             
-            if (requireAuth && token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            }
             return headers;
         };
 
-        const displayResponse = (elId, data) => {
-            document.getElementById(elId).textContent = JSON.stringify(data, null, 2);
+        const renderOut = (el, data) => {
+            document.getElementById(el).textContent = JSON.stringify(data, null, 2);
         };
 
-        // For simplicity, H2 needs a tenant before we insert a user to avoid FK Constraint error. 
-        // We will seed it seamlessly when registering if it fails, or explain. Actually, if Flyway doesn't seed, we might hit 500.
-        // Wait! Let's just catch the error and display it cleanly.
-
-        async function register() {
+        async function executeRegister() {
             try {
-                const username = document.getElementById('regStrUsername').value;
-                const password = document.getElementById('regStrPassword').value;
-                const role = document.getElementById('regStrRole').value;
+                const payload = {
+                    username: document.getElementById('regUser').value,
+                    password: document.getElementById('regPass').value,
+                    role: document.getElementById('regRole').value
+                };
                 
+                renderOut('resRegister', "Loading...");
                 const res = await fetch('/auth/register', {
                     method: 'POST',
                     headers: getHeaders(false),
-                    body: JSON.stringify({ username, password, role })
+                    body: JSON.stringify(payload)
                 });
                 
                 const data = await res.json();
-                displayResponse('resRegister', data);
+                renderOut('resRegister', data);
                 
+                // Auto-fill token if success
                 if (data.token) {
                     document.getElementById('globalToken').value = data.token;
                 }
             } catch (err) {
-                displayResponse('resRegister', { error: err.message });
+                renderOut('resRegister', { error: err.message });
             }
         }
 
-        async function login() {
+        async function executeLogin() {
             try {
-                const username = document.getElementById('loginUsername').value;
-                const password = document.getElementById('loginPassword').value;
+                const payload = {
+                    username: document.getElementById('loginUser').value,
+                    password: document.getElementById('loginPass').value
+                };
                 
+                renderOut('resLogin', "Loading...");
                 const res = await fetch('/auth/login', {
                     method: 'POST',
                     headers: getHeaders(false),
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify(payload)
                 });
                 
                 const data = await res.json();
-                displayResponse('resLogin', data);
+                renderOut('resLogin', data);
                 
+                // Auto-fill token if success
                 if (data.token) {
                     document.getElementById('globalToken').value = data.token;
                 }
             } catch (err) {
-                displayResponse('resLogin', { error: err.message });
+                renderOut('resLogin', { error: err.message });
             }
         }
 
         async function createProject() {
             try {
-                const name = document.getElementById('projName').value;
-                const description = document.getElementById('projDesc').value;
-                const status = document.getElementById('projStatus').value;
+                const payload = {
+                    name: document.getElementById('projName').value,
+                    description: document.getElementById('projDesc').value,
+                    status: document.getElementById('projStatus').value
+                };
                 
+                renderOut('resProjects', "Loading...");
                 const res = await fetch('/api/projects', {
                     method: 'POST',
                     headers: getHeaders(true),
-                    body: JSON.stringify({ name, description, status })
+                    body: JSON.stringify(payload)
                 });
                 
-                const data = await res.json();
-                displayResponse('resCreateProject', data);
+                // Sometimes exceptions come as text if not standard JSON handler
+                const text = await res.text();
+                try {
+                    renderOut('resProjects', JSON.parse(text));
+                } catch(e) {
+                    document.getElementById('resProjects').textContent = text;
+                }
             } catch (err) {
-                displayResponse('resCreateProject', { error: err.message });
+                renderOut('resProjects', { error: err.message });
             }
         }
 
         async function listProjects() {
             try {
+                renderOut('resProjects', "Loading...");
                 const res = await fetch('/api/projects', {
                     method: 'GET',
                     headers: getHeaders(true)
                 });
                 
-                const data = await res.json();
-                displayResponse('resListProjects', data);
+                const text = await res.text();
+                try {
+                    renderOut('resProjects', JSON.parse(text));
+                } catch(e) {
+                    document.getElementById('resProjects').textContent = text;
+                }
             } catch (err) {
-                displayResponse('resListProjects', { error: err.message });
+                renderOut('resProjects', { error: err.message });
             }
         }
     </script>
